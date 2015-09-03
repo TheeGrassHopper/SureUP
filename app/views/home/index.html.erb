@@ -1,0 +1,9 @@
+<h3>Select Type:</h3>
+<hr/>
+<div class="row">
+  <% @types.each do |type| %>
+    <div class="large-4 columns">
+      <%= link_to type, makes_path(type: type), :class => "button large expand" %>
+    </div>
+  <% end %>
+</div>

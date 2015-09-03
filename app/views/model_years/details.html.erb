@@ -1,0 +1,114 @@
+<div class="container">
+  <h3>
+    <%= link_to session[:condition].titleize, root_path %>
+    <%= ":" %>
+    <%= link_to "Makes", makes_path %>
+    >
+    <%= link_to @make, make_path(name: @make, id: @make_id) %>
+    >
+    <%= link_to @model, model_years_path(make: @make, model: @model, id: @model_id) %>
+    >
+    <%= link_to @year, model_year_path(id: @model_year_id) %>
+    >
+    <%= @style_name %>
+  </h3>
+</div>
+<div class="row">
+  <div class="large-12 columns">
+    <ul data-options="timer_speed: 8000;">
+      <% @images.each do |image| %>
+        <li>
+          <center>
+            <%= image_tag(find_best_image(image["photoSrcs"])) %>
+          </center>
+          <div class="orbit-caption">
+            <%= image["captionTranscript"] %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+    <script>
+      
+      $(document).foundation('orbit');
+
+
+    </script>
+  </div>
+</div>
+<div class="row">
+  <div class="large-12 columns">
+    <table>
+      <thead>
+        <tr>
+          <th colspan="2">
+            <h4>Engine Specs</h4>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @engine.first.last["attributeGroups"]["ENGINE"]["attributes"].each do |attr| %>
+          <tr>
+            <td>
+              <%= attr.last["name"].humanize %>
+            </td>
+            <td>
+              <%= attr.last["value"] %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="row">
+  <div class="large-12 columns">
+    <h4>Features</h4>
+  </div>
+</div>
+<div class="row">
+  <div class="large-12 columns">
+    <div class="row">
+      <% @style.first["attributeGroups"].map{|s| s[0] }.sort{|x,y| x <=> y }.each do |group| %>
+        <div class="large-3 small-12 columns">
+          <%= link_to group.humanize, "##{group}", :class => "button small expand" %>
+        </div>
+      <% end %>
+    </div>
+    <% @style.first["attributeGroups"].each do |attr_group| %>
+      <table id="<%= attr_group[0] %>">
+        <thead>
+          <tr>
+            <th colspan="2">
+              <h4>
+                <%= attr_group.last["name"].humanize %>
+                <%= link_to "(Top)", "#", :style => "color: lightblue; margin-left: 10px;" %>
+              </h4>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if attr_group.last["attributes"] %>
+            <tr>
+              <% attr_group.last["attributes"].each do |attr| %>
+                <tr>
+                  <td>
+                    <h6>
+                      <%= attr.last["name"].gsub(/_/," ") %>
+                    </h6>
+                  </td>
+                  <td>
+                    <% if attr.last["value"] %>
+                      <%= attr.last["value"] %>
+                    <% else %>
+                      <%= "n/a" %>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+
+<div class="container">
+  <h3>
+    <%= link_to session[:condition].titleize, root_path %>
+    <%= ":" %>
+    <%= link_to "Makes", makes_path %>
+    >
+    <%= link_to @make, make_path(name: @make, id: @model_years.first["makeId"]) %>
+    >
+    <%= @model %>
+    >
+    <%= "Model Years" %>
+  </h3>
+</div>
+<hr/>
+<div class="row">
+  <% @model_years.sort{|x,y| y["year"] <=> x["year"] }.each do |year| %>
+    <div class="large-4 columns">
+      <div class="block">
+        <%= link_to year["year"], model_year_path(id: year["id"]), :class => "button large expand", :id => year["year"] %>
+        <%= image_tag(get_sample_image_for_style(year["subModels"].first["styleIds"]), :class => "sample_image") %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+

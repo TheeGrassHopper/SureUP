@@ -1,0 +1,30 @@
+<div class="container">
+  <h3>
+    Makes
+    >
+    <%= session[:condition].titleize %>
+  </h3>
+</div>
+<div class="row">
+  <% @makes.each do |make| %>
+    <div class="large-4 columns">
+      <%= link_to make["name"], make_path(name: make["name"], id: make["id"]), :class => "button large expand loading" %>
+    </div>
+  <% end %>
+</div>
+<div class="reveal-modal" id="loading">
+  <center>
+    <h4>Loading content</h4>
+  </center>
+  <center>
+    <%= image_tag("loading.gif") %>
+  </center>
+</div>
+<script>
+  
+  $(".loading").click(function(){
+    $('#loading').foundation('reveal', 'open'); 
+  });
+
+
+</script>
